@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.progressWrapper {
+  background-color: black;
+  width: 150px;
+  height: 15px;
+  margin-left: 200px;
+  margin-top: 100px;
+}
+
+.progressBar {
+  background-color: blue;
+  height: 15px;
+  /* transform: translate(10px 10px); */
+  /* margin-left: 200px;
+  margin-top: 100px; */
+}
+
+.kryg {
+  background-color: lawngreen;
+  width: 20px;
+  height: 20px;
+  border-radius: 60px;
+}
+
+.progress-bar {
+  background-color: blue;
+  width: 1080px;
+  height: 30px;
+}
+
+.progress-bar-inner {
+  background-color: rgb(40, 119, 44);
+  width: 560px;
+  height: 30px;
+}

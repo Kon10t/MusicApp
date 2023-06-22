@@ -1,0 +1,20 @@
+{
+  "TopCharts": [
+    { "id": 2, "cover": "http://localhost/music-app/src/songs/songsCover/Рокстар50x50.jpg", "title": "Рок стар", "author": "Heronwater", "src": "Heronwater_-_Рок стар" },
+    { "id": 3, "cover": "http://localhost/music-app/src/songs/songsCover/50x50Zavoevat`.jpg", "title": "Заново завоевать", "author": "Pepel Nahudi","src": "Pepel Nahudi - Заново завоевать" },
+    { "id": 4, "cover": "http://localhost/music-app/src/songs/songsCover/50x50Goblin.jpg", "title": "Goblin FM", "author": "Платина","src": "Платина - Goblin FM" }
+  ],
+  "AdvisableSongs": [
+    { "id": 1, "cover": "http://localhost/music-app/src/songs/songsCover/200x200Goblin.jpg", "title": "Рок стар", "author": "Heronwater", "src": "Heronwater_-_Рок стар" },
+    { "id": 2, "cover": "http://localhost/music-app/src/songs/songsCover/200x200Zavoevat`.jpg", "title": "Заново завоевать", "author": "Pepel Nahudi","src": "Pepel Nahudi - Заново завоевать" },
+    { "id": 3, "cover": "http://localhost/music-app/src/songs/songsCover/Рокстар200x200.jpg", "title": "Goblin FM", "author": "Платина","src": "Платина - Goblin FM" },
+    { "id": 4, "cover": "http://localhost/music-app/src/image/TopCharts/200x200THRILLEЯ.jpg", "title": "THRILLEЯ", "author": "Kai Angel, 9mice","src": "Kai Angel, 9mice - THRILLEЯ" },
+    { "id": 5, "cover": "http://localhost/music-app/src/image/TopCharts/200x200HotlineBling.jpg", "title": "HotlineBling", "author": "Drake","src": "Drake - HotlineBling" }
+  ],
+  "albums": [
+    { "id": 1, "cover": "some image", "name": "FREE RIO 2", "author": "OG Buda" }
+  ],
+  "liked": [
+      { "id": 1, "name": "audi", "author": "MAYOT", "duration": ""}
+  ]
+}
