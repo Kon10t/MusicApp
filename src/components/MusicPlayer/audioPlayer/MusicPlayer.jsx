@@ -23,8 +23,8 @@ export default function MusicPlayer() {
   const [currentTime, setCurrentTime] = useState(1);
   const [duration, setDuration] = useState(192);
   const [volume, setVolume] = useState(0.3);
-  const [seekTime, setSeekTime] = useState(1);
-  // console.log(seekTime)
+  const [seekTime, setSeekTime] = useState(0);
+  console.log(`seekTime: ${seekTime}`);
   // const [audios, setAudios] = useState([]);
   // const [currentAudio, setCurrentAudio] = useState(null);
 
@@ -52,7 +52,7 @@ export default function MusicPlayer() {
     console.log('Error loading audio file');
   }
 
-  const onTimeUpdate = (event) => {
+  const onTimeUpdate = async (event) => {
     const newSeekTime = event.target.currentTime / event.target.duration;
     requestAnimationFrame(() => {
       setSeekTime(newSeekTime);

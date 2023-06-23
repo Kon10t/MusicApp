@@ -1,65 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 function ProgressBar({ value, min, max, setCurrentTime, setSeekTime }) {
-
+  console.log(`progressBar seekTime: ${value}`)
   const [scaleX, setScaleX] = useState();
-  const [onMove, setOnMove] = useState(true);
+  const [onMove, setOnMove] = useState(false);
+  const progressBarRef = useRef(null);
 
-  // Функция, вызываемая при перемещении ползунка
   const handleDragProgress = (event) => {
-    // Получаем координаты клика относительно progress-line
-    // const clickX = event.clientX - event.target.getBoundingClientRect().left;
-    // const maxInputWidth = event.target.clientWidth;
-
-    // Вычисляем новое значение seekTime
-    // const percent = clickX / maxInputWidth;
-    // const changedSeekTime = min + (max - min) * percent;
-
-    // Обновляем seekTime и выполняем другие необходимые действия
-
-    // Дополнительные действия, связанные с перемоткой песни
-    setOnMove(false);
-    document.onmousemove = function(event) {
-      MoveAt(event);
-    }
-  };
-
-  // Функция, вызываемая при отпускании кнопки мыши
-  const handleDragEnd = (event) => {
-    const clickX = (event.clientX / event.target.offsetWidth);
-    const changedSeekTime = max * clickX;
-
-    console.log(`clickX: ${clickX}`);
-    console.log(`changedSeekTime: ${changedSeekTime}`);
+    event.preventDefault();
     setOnMove(true);
-    setCurrentTime(changedSeekTime);
-
-    // Дополнительные действия при отпускании ползунка
-    document.onmousemove = null;
-    event.target.onmouseup = null;
-    event.target.style.position = 'relative';
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleDragEnd);
   };
 
-  function MoveAt(event) {
-    let value = (event.clientX / event.target.offsetWidth);
-    console.log(`value: ${value}`);
-    setScaleX(value);
-    // event.target.style.transform = `scaleX(${value})`
+  const handleMouseMove = (event) => {
+    const progressBarWidth = progressBarRef.current.offsetWidth;
+    const clickX = event.clientX - progressBarRef.current.getBoundingClientRect().left;
+    const newScaleX = clickX / progressBarWidth;
+    setScaleX(newScaleX);
+  };
 
-    let scaleX = window.getComputedStyle(event.target).getPropertyValue('transform').split(' ');
-    console.log(scaleX);
-    console.log('click')
-  }
+  const handleDragEnd = (event) => {
+    const progressBarWidth = progressBarRef.current.offsetWidth;
+    const clickX = event.clientX - progressBarRef.current.getBoundingClientRect().left;
+    const newScaleX = clickX / progressBarWidth;
+    const changedSeekTime = max * newScaleX;
+
+    console.log(`changedSeekTime: ${changedSeekTime}`);
+
+    setCurrentTime(changedSeekTime);
+    setSeekTime(changedSeekTime / max);
+    setOnMove(false);
+
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleDragEnd);
+  };
+
+  // useEffect(() => {
+  //   if (!onMove) {
+  //     setScaleX(value);
+  //   }
+  // }, [value, onMove]);
 
   return (
-    <div
-      className='h-[15px]'
-      onMouseDown={(e) => handleDragProgress(e)}
-      onMouseUp={(e) => handleDragEnd(e)}>
-      <div className="bg-gray-500 h-[15px]">
+    <div className='h-[30px]' ref={progressBarRef}>
+      <div
+        className='bg-gray-500 h-[30px]'
+        onMouseDown={handleDragProgress}
+      >
         <div
-          className={`progress-line bg-yellow-500 h-[15px] relative origin-left`}
-          style={onMove ? { transform: `scaleX(${value})` } : { transform: `scaleX(${scaleX})` }}
+          className='progress-line bg-yellow-500 h-[30px] relative origin-left'
+          style={{ transform: `scaleX(${onMove ? scaleX : value})` }}
         ></div>
       </div>
     </div>
