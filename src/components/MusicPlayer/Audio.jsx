@@ -1,9 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-const Audio = ( {activeSong, isPlaying, volume, currentTime, handleCanPlay, handleError, onLoadedData, onTimeUpdate} ) => {
+const Audio = ( {activeSong, isPlaying, volume, currentTime, random, handleCanPlay, handleError, onLoadedData, onTimeUpdate} ) => {
   // console.log(volume);
   // ref for audio tag
   const audioRef = useRef(null);
+  
+  const [prevCurrent, setPrevCurrent] = useState();
+
+  // if (currentTime == prevCurrent) {
+  //   setCurrentTime();
+  // }
 
   // audio play and pause event
   if (audioRef.current) {
@@ -22,9 +28,10 @@ const Audio = ( {activeSong, isPlaying, volume, currentTime, handleCanPlay, hand
 
   // async audio time update
   useEffect(() => {
+    console.log("useEffect triggered");
     audioRef.current.currentTime = currentTime;
-  }, [currentTime]);
-
+  }, [currentTime, random]);
+  
   return (
     <>
       <audio

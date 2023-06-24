@@ -10,7 +10,7 @@ import Audio from "../Audio.jsx";
 export default function MusicPlayer() {
 
   const dispatch = useDispatch();
-  const { activeSong, isPlaying } = useSelector((state) => state.player)
+  const { activeSong, isPlaying, currentUpdate } = useSelector((state) => state.player)
 
   const handlePlayClick = () => {
     dispatch(playPause(true));
@@ -20,11 +20,15 @@ export default function MusicPlayer() {
     dispatch(playPause(false));
   }
 
-  const [currentTime, setCurrentTime] = useState(1);
+  const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(192);
   const [volume, setVolume] = useState(0.3);
   const [seekTime, setSeekTime] = useState(0);
-  console.log(`seekTime: ${seekTime}`);
+  const [random, setRandom] = useState(0);
+  console.log(`currentTime: ${currentTime}`);
+  console.log(`random: ${random}`);
+
+  // console.log(`seekTime: ${seekTime}`);
   // const [audios, setAudios] = useState([]);
   // const [currentAudio, setCurrentAudio] = useState(null);
 
@@ -52,7 +56,7 @@ export default function MusicPlayer() {
     console.log('Error loading audio file');
   }
 
-  const onTimeUpdate = async (event) => {
+  const onTimeUpdate = (event) => {
     const newSeekTime = event.target.currentTime / event.target.duration;
     requestAnimationFrame(() => {
       setSeekTime(newSeekTime);
@@ -68,12 +72,12 @@ export default function MusicPlayer() {
         <Controls isPlaying={isPlaying} handlePause={handlePauseClick} handlePlay={handlePlayClick} />
       </div>
       <ProgressBar
-        isPlaying={isPlaying}
         value={seekTime}
         min="0"
         max={duration}
         setCurrentTime={setCurrentTime}
-        setSeekTime={setSeekTime}
+        setSeekTime={() => setSeekTime()}
+        setRandom={setRandom}
       />
       <VolumeChange
         value={volume}
@@ -87,6 +91,7 @@ export default function MusicPlayer() {
         isPlaying={isPlaying}
         volume={volume}
         currentTime={currentTime}
+        random={random}
         onLoadedData={(event) => setDuration(event.target.duration)}
         onTimeUpdate={(event) => onTimeUpdate(event)}
         handleCanPlay={handleCanPlay}

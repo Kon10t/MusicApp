@@ -5,6 +5,7 @@ const initialState = {
   currentIndex: 0,
   isActive: false,
   isPlaying: false,
+  isCanCurrentUpdate: false,
   activeSong: {},
   genreListId: '',
 };
@@ -27,6 +28,10 @@ const playerSlice = createSlice({
 
     playPause: (state, action) => {
       state.isPlaying = action.payload;
+    },
+
+    currentUpdate: (state, action) => {
+      state.isCanCurrentUpdate = action.payload;
     }
   }
 });
