@@ -51,6 +51,7 @@ function ProgressBar({ value, min, max, setCurrentTime, setSeekTime, setRandom }
     setCurrentTime(changedSeekTime);
     setSeekTime(changedSeekTime / max);
     setRandom(Math.random())
+    //sdsdsdds
 
     setOnMove(false);
     
