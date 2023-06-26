@@ -28,8 +28,11 @@ const Audio = ( {activeSong, isPlaying, volume, currentTime, random, handleCanPl
 
   // async audio time update
   useEffect(() => {
-    console.log("useEffect triggered");
-    audioRef.current.currentTime = currentTime;
+    if (currentTime >= 0 && currentTime <= audioRef.current.duration) {
+      audioRef.current.currentTime = currentTime; 
+    } else {
+      console.log('sds')
+    }
   }, [currentTime, random]);
   
   return (

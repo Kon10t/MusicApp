@@ -7,6 +7,7 @@ const initialState = {
   isPlaying: false,
   isCanCurrentUpdate: false,
   activeSong: {},
+  skipSong: [],
   genreListId: '',
 };
 
@@ -15,13 +16,11 @@ const playerSlice = createSlice({
   initialState,
   reducers: {
     setActiveSong: (state, action) => {
-      state.activeSong.title = action.payload.title;
-      state.activeSong.cover = action.payload.cover;
-      state.activeSong.src = action.payload.src;
+      state.activeSong = action.payload;
 
-      console.log(`state.activeSong.title: ${JSON.stringify(state.activeSong.title)}, action.payload.title: ${JSON.stringify(action.payload.title)}`);
-      console.log(`state.activeSong.title: ${JSON.stringify(state.activeSong.cover)}, action.payload.title: ${JSON.stringify(action.payload.cover)}`);
-      console.log(`state.activeSong.src: ${JSON.stringify(state.activeSong.src)}, action.payload.src: ${JSON.stringify(action.payload.src)}`)
+      console.log(`state.activeSong: ${JSON.stringify(state.activeSong)}, action.payload: ${JSON.stringify(action.payload)}`);
+      // console.log(`state.activeSong.cover: ${JSON.stringify(state.activeSong.cover)}, action.payload.cover: ${JSON.stringify(action.payload.cover)}`);
+      // console.log(`state.activeSong.src: ${JSON.stringify(state.activeSong.src)}, action.payload.src: ${JSON.stringify(action.payload.src)}`)
 
       state.isActive = true;
     },
@@ -30,12 +29,17 @@ const playerSlice = createSlice({
       state.isPlaying = action.payload;
     },
 
-    currentUpdate: (state, action) => {
-      state.isCanCurrentUpdate = action.payload;
+    setCurrentIndex: (state, action) => {
+      state.currentIndex = action.payload;
+    },
+
+    setSkipSong: (state, action) => {
+      state.skipSong = action.payload;
+      // console.log(`state.skipSong: ${JSON.stringify(state.skipSong)}`);
     }
   }
 });
 
-export const { setActiveSong, playPause} = playerSlice.actions;
+export const { setActiveSong, setSkipSong, playPause, setCurrentIndex } = playerSlice.actions;
 
 export default playerSlice.reducer;

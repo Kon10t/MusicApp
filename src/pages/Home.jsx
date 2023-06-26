@@ -29,6 +29,8 @@ const Home = () => {
       fetchData();
   }, []);
 
+  // console.log(`chartData: ${JSON.stringify(chartData)}`);
+
   return (
     <div className="bg-light-ink-black h-auto flex flex-row" style={{ minHeight: `${screenMinWidth}px` }}>
       <div className="left mx-5">
@@ -40,16 +42,27 @@ const Home = () => {
           <PlaylistSlider />
           <div className="inner h-auto flex flex-col flex-wrap sm:justify-start justify-center px-16">
             <span className="font-quicksand font-medium text-4xl text-light-white">Top charts</span>
-              {chartData.map((elem, i) => (
+            {chartData.map((elem, i, hui) => (
                 <TopChartCard
                   key={elem.id}
+                  id={i}
+                  elem={elem}
+                  hui={hui}
+                />
+              ))
+              }
+              {/* {chartData.map((elem, i, hui) => (
+                <TopChartCard
+                  key={elem.id}
+                  id={i}
                   cover={elem.cover}
                   title={elem.title}
                   author={elem.author}
                   src={elem.src}
+                  hui={hui}
                 />
               ))
-              }
+              } */}
           </div>
         </div>
         <ReleasesSlider />

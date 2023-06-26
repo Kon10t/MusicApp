@@ -1,20 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import PlayPause from './PlayPause';
-import { setActiveSong, playPause} from '../redux/playerSlice.js';
+import { setActiveSong, setSkipSong, setCurrentIndex, playPause} from '../redux/playerSlice.js';
 
-const TopChartCard = ({cover, title, author, src}) => {
+const TopChartCard = ({ id, hui, elem }) => {
   const dispatch = useDispatch();
-  const { activeSong, isPlaying } = useSelector((state) => state.player);
+  const { activeSong, isPlaying, skipSong, currentIndex } = useSelector((state) => state.player);
 
   const handlePlayClick = () => {
-    dispatch(setActiveSong({ title, author, cover, src }))
+    dispatch(setActiveSong(elem));
+    // dispatch(setActiveSong({ title, author, cover, src }));
+    dispatch(setSkipSong(hui));
+    dispatch(setCurrentIndex(id));
     dispatch(playPause(true));
   }
 
   const handlePauseClick = () => {
     dispatch(playPause(false));
   }
+  // gnk
+  // console.log(`hui: ${JSON.stringify(hui)}`);
 
   return (
     <div className="flex flex-col xl:w-[717px] 2xl:w-[417px] mt-5 bg-opacity-80 cursor-pointer">
@@ -24,33 +29,25 @@ const TopChartCard = ({cover, title, author, src}) => {
             <PlayPause
               isPlaying={isPlaying}
               activeSong={activeSong}
-              title={title}
+              skipSong={skipSong}
+              title={elem.title}
               handlePause={handlePauseClick}
               handlePlay={handlePlayClick}
             />
           </div>
           <div className="artist_cover relative">
-            <img src={cover} className="xl:w-[100px] 2xl:w-[90px]" alt="top-chart-pics" />
+            <img src={elem.cover} className="xl:w-[100px] 2xl:w-[90px]" alt="top-chart-pics" />
           </div>
         </div>
         <div className="px-3 font-quicksand font-medium xl:text-xl text-light-white">
-          <p>{title}</p>
-          <p>{author}</p>
+          <p>{elem.title}</p>
+          <p>{elem.author}</p>
         </div>
         <div className="font-quicksand font-medium xl:text-xl text-light-white">
           <p className="">heart</p>
         </div>
       </div>
     </div>
-  )
-}
-
-const PlayTopCharts = () => {
-
-  return (
-    <>
-
-    </>
   )
 }
 

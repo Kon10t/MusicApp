@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveSong, playPause } from '../../../redux/playerSlice.js'
+import { setActiveSong, setSkipSong, playPause, setCurrentIndex } from '../../../redux/playerSlice.js'
 
 import ProgressBar from "../progressBar.jsx";
 import VolumeChange from "../volumeChange.jsx";
@@ -10,8 +10,20 @@ import Audio from "../Audio.jsx";
 export default function MusicPlayer() {
 
   const dispatch = useDispatch();
-  const { activeSong, isPlaying, currentUpdate } = useSelector((state) => state.player)
+  const { activeSong, isPlaying, skipSong, currentIndex } = useSelector((state) => state.player)
+  console.log(`skipSong: ${JSON.stringify(skipSong[currentIndex])}`);
+  // console.log(`currentIndex: ${JSON.stringify(currentIndex)}`);
 
+  const handleNextSkipClick = () => {
+   dispatch(setActiveSong(skipSong[currentIndex + 1]));
+   dispatch(setCurrentIndex(currentIndex + 1));
+  }
+
+  const handlePrevSkipClick = () => {
+    dispatch(setActiveSong(skipSong[currentIndex -1]));
+    dispatch(setCurrentIndex(currentIndex - 1));
+  }
+  
   const handlePlayClick = () => {
     dispatch(playPause(true));
   }
@@ -25,8 +37,8 @@ export default function MusicPlayer() {
   const [volume, setVolume] = useState(0.3);
   const [seekTime, setSeekTime] = useState(0);
   const [random, setRandom] = useState(0);
-  console.log(`currentTime: ${currentTime}`);
-  console.log(`random: ${random}`);
+  // console.log(`currentTime: ${currentTime}`);
+  // console.log(`random: ${random}`);
 
   // console.log(`seekTime: ${seekTime}`);
   // const [audios, setAudios] = useState([]);
@@ -69,7 +81,7 @@ export default function MusicPlayer() {
         <img src={activeSong?.cover} alt="Music_Player-Cover" />
       </div>
       <div className="flex justify-center items-center">
-        <Controls isPlaying={isPlaying} handlePause={handlePauseClick} handlePlay={handlePlayClick} />
+        <Controls isPlaying={isPlaying} handlePause={handlePauseClick} handlePlay={handlePlayClick} handleSkipPrev={handlePrevSkipClick} handleSkipNext={handleNextSkipClick}/>
       </div>
       <ProgressBar
         value={seekTime}
