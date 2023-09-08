@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
-function ProgressBar({ value, min, max, setCurrentTime, setSeekTime, setRandom }) {
-  // console.log(`progressBar seekTime: ${value}`)
+function ProgressBar({ value, min, max, setCurrentTime, setSeekTime, setRandom, NextTrack }) {
+
   // Hooks
   const [scaleX, setScaleX] = useState(); // Одно из двух значений для подставления в transform
-  const [prevScaleX, setPrevScaleX] = useState();
-  const [onMove, setOnMove] = useState(false); // Определяет, какое из двух значений подставлять в transform
-  const [nothing, setNothing] = useState(false);
+  const [onDrag, setOnDrag] = useState(false); // Определяет, какое из двух значений подставлять в transform
   const progressBarRef = useRef(null);
 
   // Начальная точка, срабатывает с помощью эвента onMouseDown на элементе
@@ -22,7 +20,7 @@ function ProgressBar({ value, min, max, setCurrentTime, setSeekTime, setRandom }
     const newScaleX = clickX / progressBarWidth;
     
     setScaleX(newScaleX);
-    setOnMove(true);
+    setOnDrag(true);
 
     // Добавляем события
     document.addEventListener('mousemove', handleMouseMove);
@@ -35,7 +33,16 @@ function ProgressBar({ value, min, max, setCurrentTime, setSeekTime, setRandom }
     const progressBarWidth = progressBarRef.current.offsetWidth;
     const clickX = event.clientX - progressBarRef.current.getBoundingClientRect().left;
     const newScaleX = clickX / progressBarWidth;
-    setScaleX(newScaleX);
+
+    if (newScaleX >= 0 && newScaleX <= 1) {
+      setScaleX(newScaleX);
+    }
+    if (newScaleX < 0) {
+      setScaleX(0);
+    }
+    if (newScaleX > 1) {
+      setScaleX(1);
+    }
   };
 
   // Срабатывает при отпускании мыши на элементе
@@ -48,12 +55,29 @@ function ProgressBar({ value, min, max, setCurrentTime, setSeekTime, setRandom }
 
     // console.log(`changedSeekTime: ${changedSeekTime}`);
 
-    setCurrentTime(changedSeekTime);
-    setSeekTime(changedSeekTime / max);
-    setRandom(Math.random())
-    //sdsdsdds
+    // changedSeekTime - это как e.target.currentTime / e.target.duration
+    // setSeekTime(changedSeekTime / max); Тут меняем время прогресс бара, обновляя value
+    console.log(`sd:${changedSeekTime}`)
+    const Test = changedSeekTime / max;
+    if (Test >= 0 && Test <= 1) {
+      setSeekTime(changedSeekTime / max);
+      setCurrentTime(changedSeekTime); // После отпускания мыши, меняем время трека
+    }
+    if (Test < 0) {
+      console.log('TRUE')
+      setSeekTime(0);
+      setCurrentTime(0);
+    }
+    if (Test >= 1) {
+      setSeekTime(0);
+      setCurrentTime(0);
+      NextTrack();
+    }
 
-    setOnMove(false);
+    // Для массива зависимостей, чтобы обновлять currentTime
+    setRandom(Math.random())
+
+    setOnDrag(false);
     
 
     // Убираем события
@@ -61,21 +85,15 @@ function ProgressBar({ value, min, max, setCurrentTime, setSeekTime, setRandom }
     document.removeEventListener('mouseup', handleDragEnd);
   };
 
-  // useEffect(() => {
-  //   if (!onMove) {
-  //     setScaleX(value);
-  //   }
-  // }, [value, onMove]);
-
   return (
-    <div className='h-[30px] cursor-pointer' ref={progressBarRef}>
+    <div className='h-[13px] cursor-pointer' ref={progressBarRef}>
       <div
-        className='bg-gray-500 h-[30px] z-10'
+        className='bg-gray-500 h-[13px] z-10'
         onMouseDown={handleDragProgress}
       >
         <div
-          className='progress-line bg-yellow-500 h-[30px] relative origin-left'
-          style={{ transform: `scaleX(${onMove ? scaleX : value})` }}
+          className='progress-line bg-yellow-500 h-[13px] relative origin-left'
+          style={{ transform: `scaleX(${onDrag ? scaleX : value})` }}
         ></div>
       </div>
     </div>

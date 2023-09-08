@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import Audio from './MusicPlayer/audioPlayer/MusicPlayer'
+import Audio from './MusicPlayer/MusicPlayer'
 import PlayPause from './PlayPause.jsx';
 import { playPause, setActiveSong } from '../redux/playerSlice.js';
 

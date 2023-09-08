@@ -19,7 +19,7 @@ function Rewind({setPlaybackAttribute, audioRef}) {
     setAudios(data);
     
     audios.map((index, value, array) => {
-      setCurrentAudio(array[counter].path);
+      return setCurrentAudio(array[counter].path);
     })
     console.log(audios[counter].path);
 

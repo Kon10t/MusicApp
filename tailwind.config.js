@@ -11,7 +11,12 @@ module.exports = {
         black: '#191624',
         'light-ink-black': '#1D2123',
         'light-white': '#EFEEE0',
-        'dark-alt': '#1A1E1F'
+        'dark-alt': '#1A1E1F',
+        'hinted-black': '#18181b'
+      },
+      screens: {
+        '2.5xl': '1745px',
+        '3xl': '1920px'
       },
       animation: {
         slideup: 'slideup 1s ease-in-out',
