@@ -84,7 +84,7 @@ export default function MusicPlayer() {
   }
 
   return (
-    <div className="fixed bottom-0 xl: 2xl:w-[1522.4px] 2.5xl:w-[1553.47px] 3xl:w-[1551px] 3xl:h-[90px] bg-hinted-black bg-light-ink-black opacity-70">
+    <div className="fixed bottom-0 xl: 2xl:w-[1522.4px] 2.5xl:w-[1553.47px] 3xl:w-[1521px] 3xl:h-[90px] bg-hinted-black bg-light-ink-black opacity-70">
       <ProgressBar
         value={seekTime}
         min="0"
